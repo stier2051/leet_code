@@ -2,38 +2,52 @@ package easy;
 
 public class RomanToInteger {
     public static void main(String[] args) {
-
+        System.out.println(romanToInt("MCMXCIV"));
+        System.out.println(romanToInt("LVIII"));
     }
 
     public static int romanToInt(String s) {
-        int i = 0;
+        int number = 0;
         char[] liters = s.toCharArray();
-        for (char x : liters) {
-            switch (x) {
+        int[] array = new int[liters.length];
+        for (int i = 0; i < liters.length; i++) {
+            switch (liters[i]) {
                 case 'I':
-                    x = 1;
+                    array[i] = 1;
                     break;
                 case 'V':
-                    x = 5;
+                    array[i] = 5;
                     break;
                 case 'X':
-                    x = 10;
+                    array[i] = 10;
                     break;
                 case 'L':
-                    x = 50;
+                    array[i] = 50;
                     break;
                 case 'C':
-                    x = 100;
+                    array[i] = 100;
                     break;
                 case 'D':
-                    x = 500;
+                    array[i] = 500;
                     break;
                 case 'M':
-                    x = 1000;
+                    array[i] = 1000;
                     break;
                 default:
                     break;
             }
         }
+        int result = 0;
+        for (int j = 0; j < array.length; j++) {
+            if (j < array.length - 1 && array[j] < array[j+1]) {
+                result += array[j+1] - array[j];
+            } else if (j > 0 && array[j] > array[j-1]) {
+                result += 0;
+            } else if (j < array.length - 1 && array[j] >= array[j+1]) {
+                result += array[j];
+            }
+            System.out.println(array[j]);
+        }
+        return result;
     }
 }
