@@ -20,9 +20,21 @@ public class FilterAppleTest {
         //as lambda without using method (isGreenApple, isHeavyApple)
         filterApples(apples, (Apple a) -> "green".equals(a.getColor()));
         filterApples(apples, (Apple a) -> a.getWeight() > 150);
+
+
     }
 
     public static List<Apple> filterApples(List<Apple> apples, Predicate<Apple> p) {
+        List<Apple> result = new ArrayList<>();
+        for (Apple apple : apples) {
+            if (p.test(apple)) {
+                result.add(apple);
+            }
+        }
+        return result;
+    }
+
+    public static List<Apple> filterApplesWithApplePredicate(List<Apple> apples, ApplePredicate p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple : apples) {
             if (p.test(apple)) {
