@@ -28,8 +28,16 @@ public class Apple {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "Apple{" +
+                "color='" + color + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
+
     public static boolean isGreenApple(Apple apple) {
-        return "green".equals(apple.getColor());
+        return Color.GREEN.name().equals(apple.getColor());
     }
 
     public static boolean isHeavyApple(Apple apple) {
