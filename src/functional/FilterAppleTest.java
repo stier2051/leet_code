@@ -8,9 +8,9 @@ import java.util.function.Predicate;
 public class FilterAppleTest {
 
     static List<Apple> apples = Arrays.asList(
-            new Apple("red", 150),
-            new Apple("green", 200),
-            new Apple("green", 130)
+            new Apple("RED", 150),
+            new Apple("GREEN", 200),
+            new Apple("GREEN", 130)
     );
     public static void main(String[] args) {
         //use methods
@@ -18,10 +18,14 @@ public class FilterAppleTest {
         System.out.println(filterApples(apples, Apple::isHeavyApple));
 
         //as lambda without using method (isGreenApple, isHeavyApple)
-        filterApples(apples, (Apple a) -> "green".equals(a.getColor()));
+        filterApples(apples, (Apple a) -> Color.GREEN.name().equals(a.getColor()));
         filterApples(apples, (Apple a) -> a.getWeight() > 150);
 
+        System.out.println(filterApplesWithApplePredicate(apples, new AppleGreenColorPredicate()));
+        System.out.println(filterApplesWithApplePredicate(apples, new AppleHeavyWeightPredicate()));
 
+        prettyPrintApple(apples, new AppleFancyFormater());
+        prettyPrintApple(apples, new AppleSimpleFormatter());
     }
 
     public static List<Apple> filterApples(List<Apple> apples, Predicate<Apple> p) {
@@ -42,5 +46,11 @@ public class FilterAppleTest {
             }
         }
         return result;
+    }
+
+    public static void prettyPrintApple(List<Apple> apples, AppleFormatter f) {
+        for (Apple apple : apples) {
+            System.out.println(f.accept(apple));
+        }
     }
 }
