@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class FilterAppleTest {
@@ -27,8 +28,13 @@ public class FilterAppleTest {
 
         prettyPrintApple(apples, new AppleFancyFormater());
         prettyPrintApple(apples, new AppleSimpleFormatter());
+
+        System.out.println(apples);
+        changeObjects(apples, (Apple a) -> a.setColor(Color.GREEN.toString()));
+        System.out.println(apples);
     }
 
+    //Predicate
     public static List<Apple> filterApples(List<Apple> apples, Predicate<Apple> p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple : apples) {
@@ -39,6 +45,7 @@ public class FilterAppleTest {
         return result;
     }
 
+    //Supplier
     public static List<Apple> filterApplesWithApplePredicate(List<Apple> apples, ApplePredicate p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple : apples) {
@@ -63,5 +70,11 @@ public class FilterAppleTest {
             }
         }
         return result;
+    }
+
+    public static <T> void changeObjects(List<T> list, Consumer<T> c) {
+        for (T e : list) {
+            c.accept(e);
+        }
     }
 }
