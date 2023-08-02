@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FilterAppleTest {
@@ -32,6 +33,9 @@ public class FilterAppleTest {
         System.out.println(apples);
         changeObjects(apples, (Apple a) -> a.setColor(Color.GREEN.toString()));
         System.out.println(apples);
+
+        List<Integer> l = map(Arrays.asList("hello", "lambda", "noutebook"), String::length);
+        changeObjects(l, System.out::println);
     }
 
     //Predicate
@@ -62,6 +66,7 @@ public class FilterAppleTest {
         }
     }
 
+    //Predicate
     public static <T> List<T> filter(List<T> list, Predicate<T> p) {
         List<T> result = new ArrayList<>();
         for (T e : list) {
@@ -72,9 +77,19 @@ public class FilterAppleTest {
         return result;
     }
 
+    //Consumer
     public static <T> void changeObjects(List<T> list, Consumer<T> c) {
         for (T e : list) {
             c.accept(e);
         }
+    }
+
+    //Function
+    public static <T, R> List<R> map(List<T> list, Function<T, R> f) {
+        List<R> result = new ArrayList<>();
+        for (T t: list) {
+            result.add(f.apply(t));
+        }
+        return result;
     }
 }
