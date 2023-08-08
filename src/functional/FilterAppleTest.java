@@ -36,6 +36,19 @@ public class FilterAppleTest {
 
         List<Integer> l = map(Arrays.asList("hello", "lambda", "noutebook"), String::length);
         changeObjects(l, System.out::println);
+
+        List<String> str = Arrays.asList("a", "b", "A", "B");
+        str.sort(String::compareToIgnoreCase);
+        System.out.println(str);
+
+        //sort apples by weight
+        apples.sort(Comparator.comparing(Apple::getWeight));
+        //sort apples by weight reversed
+        apples.sort(Comparator.comparing(Apple::getWeight).reversed());
+        //sort by color after sorting by weight
+        apples.sort(Comparator.comparing(Apple::getWeight).reversed().thenComparing(Apple::getColor));
+
+
     }
 
     //Predicate
