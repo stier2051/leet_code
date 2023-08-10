@@ -6,9 +6,7 @@ public class MergeSort implements Sort {
         if (nums.length <= 1) {
             return nums;
         }
-
         int n = nums.length / 2;
-
         int[] left = new int[n];
         int[] right = new int[nums.length - n];
 
@@ -16,21 +14,36 @@ public class MergeSort implements Sort {
             left[i] = nums[i];
         }
 
-        for (int i = n; i < nums.length - n;) {
-            right[i] = nums[i];
+        for (int i = 0; i < nums.length - nums.length / 2; i++) {
+            right[i] = nums[n++];
         }
 
-        System.arraycopy(nums, 0, left, 0, left.length);
-        System.arraycopy(nums, nums.length - nums.length / 2, right, nums.length - nums.length / 2, right.length);
-
-        return new int[0];
+        return merge(sort(left), sort(right));
     }
 
     public int[] merge(int[] left, int[] right) {
         int[] merged = new int[left.length + right.length];
         int leftIndex = 0;
         int rightIndex = 0;
-//        for (int i = 0; i < )
-        return null;
+        int index = 0;
+
+        for (int i = 0; i < left.length && i < right.length; i++) {
+            if (left[leftIndex] <= right[rightIndex]) {
+                merged[i] = left[leftIndex++];
+                index++;
+            } else {
+                merged[i] = right[rightIndex++];
+                index++;
+            }
+        }
+
+        for (int i = leftIndex; i < left.length; i++) {
+            merged[index++] = left[leftIndex++];
+        }
+
+        for (int i = rightIndex; i < right.length; i++) {
+            merged[index++] = right[rightIndex++];
+        }
+        return merged;
     }
 }
