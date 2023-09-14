@@ -21,7 +21,7 @@ public class SortTest {
 //        System.out.println(Arrays.toString(countingSort.sort(array5)));
 
         Sort mergeSort = new MergeSort();
-        int[] array6 = new int[]{9,15,5,5,12,34,54,8,9,27,54,34,19};
+        int[] array6 = new int[]{9,15,5,5,12,10,54,8,9,27,54,34,19};
         System.out.println(Arrays.toString(mergeSort.sort(array6)));
 
     }
