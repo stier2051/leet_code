@@ -27,12 +27,12 @@ public class MergeSort implements Sort {
         int rightIndex = 0;
         int index = 0;
 
-        for (int i = 0; i < left.length && i < right.length; i++) {
+        while (leftIndex < left.length && rightIndex < right.length) {
             if (left[leftIndex] <= right[rightIndex]) {
-                merged[i] = left[leftIndex++];
+                merged[index] = left[leftIndex++];
                 index++;
             } else {
-                merged[i] = right[rightIndex++];
+                merged[index] = right[rightIndex++];
                 index++;
             }
         }
