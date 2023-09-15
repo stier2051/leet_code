@@ -20,9 +20,13 @@ public class SortTest {
 //        int[] array5 = new int[]{9,15,5,5,12,34,54,8,9,27,54,34,19};
 //        System.out.println(Arrays.toString(countingSort.sort(array5)));
 
-        Sort mergeSort = new MergeSort();
+//        Sort mergeSort = new MergeSort();
+//        int[] array6 = new int[]{9,15,5,5,12,10,54,8,9,27,54,34,19};
+//        System.out.println(Arrays.toString(mergeSort.sort(array6)));
+
+        Sort quickSort = new QuickSort();
         int[] array6 = new int[]{9,15,5,5,12,10,54,8,9,27,54,34,19};
-        System.out.println(Arrays.toString(mergeSort.sort(array6)));
+        System.out.println(Arrays.toString(quickSort.sort(array6)));
 
     }
 
