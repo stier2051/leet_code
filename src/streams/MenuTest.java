@@ -1,8 +1,11 @@
 package streams;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MenuTest {
     public static void main(String[] args) {
@@ -18,17 +21,23 @@ public class MenuTest {
                 .filter(dish -> dish.getCalories() < 320)
                 .collect(Collectors.toList());
 
-        List<Dish> dishes = specialMenu
+        //limit
+        List<Dish> limitDishes = specialMenu
                 .stream()
                 .filter(dish -> dish.getCalories() > 300)
                 .limit(3)
                 .collect(Collectors.toList());
 
-        List<Dish> dishes2 = specialMenu
+        limitDishes.forEach(System.out::println);
+
+        //skip
+        List<Dish> skipDishes = specialMenu
                 .stream()
                 .filter(dish -> dish.getCalories() > 300)
                 .skip(2)
                 .collect(Collectors.toList());
+
+        skipDishes.forEach(System.out::println);
 
         List<Dish> meatDish = specialMenu
                 .stream()
@@ -41,9 +50,36 @@ public class MenuTest {
                 .map(Dish::getName)
                 .collect(Collectors.toList());
 
+        //takeWhile
+        List<Dish> slicedMenu1 = specialMenu.stream()
+                .takeWhile(dish -> dish.getCalories() < 320)
+                .collect(Collectors.toList());
+
+        slicedMenu1.forEach(System.out::println);
+
+        //dropWhile
+        List<Dish> slicedMenu2 = specialMenu.stream()
+                .dropWhile(dish -> dish.getCalories() < 320)
+                .collect(Collectors.toList());
+
+        slicedMenu2.forEach(System.out::println);
+
+        //use mapping
         List<String> words = Arrays.asList("Modern", "Java", "In", "Action");
         List<Integer> wordLengths = words.stream().map(String::length).collect(Collectors.toList());
 
+        List<Integer> dishNameLengths = specialMenu.stream()
+                .map(Dish::getName)
+                .map(String::length)
+                .collect(Collectors.toList());
 
+        List<String> strings = Arrays.asList("Hello", "World");
+
+        //use flatMap
+        List<String> stream = strings.stream()
+                .map(str -> str.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
