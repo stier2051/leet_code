@@ -4,7 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MenuTest {
@@ -81,5 +83,37 @@ public class MenuTest {
                 .flatMap(Arrays::stream)
                 .distinct()
                 .collect(Collectors.toList());
+
+        //возвращаем примитив int
+        int calories = specialMenu.stream()
+                .mapToInt(Dish::getCalories)
+                .sum();
+        System.out.println(calories);
+
+        //преобразование обратно в поток объектов
+        IntStream intStream = specialMenu.stream().mapToInt(Dish::getCalories);
+        Stream<Integer> stream1 = intStream.boxed();
+
+        //значения по умолчанию: класс OptionalInt
+        OptionalInt maxCalories = specialMenu.stream()
+                .mapToInt(Dish::getCalories)
+                .max();
+
+        int max = maxCalories.orElse(1);
+
+        //range - не включает границы диапазона в отличие от rangeClosed
+        IntStream evenNumbers = IntStream.rangeClosed(1, 100)
+                .filter(n -> n % 2 == 0);
+        System.out.println(evenNumbers.count());
+
+        //Пифагорова тройка
+        Stream<int[]> pythagoreanTriples =
+                IntStream.rangeClosed(1, 100).boxed()
+                        .flatMap(a -> IntStream.rangeClosed(a, 100)
+                                .filter(b -> Math.sqrt(a * a + b * b) % 1 == 0)
+                                .mapToObj(b ->
+                                        new int[]{a, b, (int)Math.sqrt(a * a + b * b)})
+                        );
+        pythagoreanTriples.forEach(t -> System.out.println(t[0] + ", " + t[1] + ", " + t[2]));
     }
 }
