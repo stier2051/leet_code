@@ -48,6 +48,10 @@ public class FilterAppleTest {
         //sort by color after sorting by weight
         apples.sort(Comparator.comparing(Apple::getWeight).reversed().thenComparing(Apple::getColor));
 
+        Predicate<Apple> greenApplePredicate = (Apple a) -> a.getColor().equals(Color.GREEN.name());
+        List<Apple> greenApples = filter(apples, greenApplePredicate);
+        System.out.println(greenApples);
+
 
     }
 
