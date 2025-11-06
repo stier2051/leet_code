@@ -1,7 +1,5 @@
 package streams;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalInt;
@@ -9,19 +7,27 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static streams.Type.*;
+
 public class MenuTest {
     public static void main(String[] args) {
         List<Dish> specialMenu = Arrays.asList(
-                new Dish("seasonal fruit", true, 120, Type.OTHER),
-                new Dish("prawns", false, 300, Type.FISH),
-                new Dish("rice", true, 350, Type.OTHER),
-                new Dish("chicken", false, 400, Type.MEAT),
-                new Dish("french fries", true, 530, Type.OTHER)
+                new Dish("seasonal fruit", true, 120, OTHER),
+                new Dish("prawns", false, 300, FISH),
+                new Dish("rice", true, 350, OTHER),
+                new Dish("chicken", false, 400, MEAT),
+                new Dish("french fries", true, 530, OTHER),
+                new Dish("pork", false, 800, MEAT),
+                new Dish("beef", false, 700, MEAT),
+                new Dish("pizza", true, 550, OTHER),
+                new Dish("salmon", false, 450, FISH)
         );
 
         List<Dish> filteredMenu = specialMenu.stream()
                 .filter(dish -> dish.getCalories() < 320)
                 .collect(Collectors.toList());
+
+        System.out.println(filteredMenu);
 
         //limit
         List<Dish> limitDishes = specialMenu
@@ -43,14 +49,18 @@ public class MenuTest {
 
         List<Dish> meatDish = specialMenu
                 .stream()
-                .filter(dish -> dish.getType() == Type.MEAT)
+                .filter(dish -> dish.getType() == MEAT)
                 .limit(2)
                 .collect(Collectors.toList());
+
+        System.out.println(meatDish);
 
         List<String> dishNames = specialMenu
                 .stream()
                 .map(Dish::getName)
                 .collect(Collectors.toList());
+
+        System.out.println(dishNames);
 
         //takeWhile
         List<Dish> slicedMenu1 = specialMenu.stream()
@@ -69,11 +79,14 @@ public class MenuTest {
         //use mapping
         List<String> words = Arrays.asList("Modern", "Java", "In", "Action");
         List<Integer> wordLengths = words.stream().map(String::length).collect(Collectors.toList());
+        System.out.println(wordLengths);
 
         List<Integer> dishNameLengths = specialMenu.stream()
                 .map(Dish::getName)
                 .map(String::length)
                 .collect(Collectors.toList());
+
+        System.out.println(dishNameLengths);
 
         List<String> strings = Arrays.asList("Hello", "World");
 
@@ -83,6 +96,8 @@ public class MenuTest {
                 .flatMap(Arrays::stream)
                 .distinct()
                 .collect(Collectors.toList());
+
+        System.out.println(stream);
 
         //возвращаем примитив int
         int calories = specialMenu.stream()
