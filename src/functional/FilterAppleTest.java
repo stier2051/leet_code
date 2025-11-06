@@ -52,7 +52,10 @@ public class FilterAppleTest {
         List<Apple> greenApples = filter(apples, greenApplePredicate);
         System.out.println(greenApples);
 
+        apples.sort(new AppleComparator());
+        System.out.println(apples);
 
+        apples.sort(Comparator.comparing(Apple::getWeight).thenComparing(Apple::getColor));
     }
 
     //Predicate

@@ -2,12 +2,12 @@ package functional;
 
 public class Apple {
     private String color;
-    private double weight;
+    private int weight;
 
     public Apple() {
     }
 
-    public Apple(String color, double weight) {
+    public Apple(String color, int weight) {
         this.color = color;
         this.weight = weight;
     }
@@ -20,11 +20,11 @@ public class Apple {
         this.color = color;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
