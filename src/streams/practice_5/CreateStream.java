@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CreateStream {
@@ -13,6 +15,35 @@ public class CreateStream {
         //create stream
         Stream<String> stream = Stream.of("Modern", "Java", "In", "Action");
         stream.map(String::toUpperCase).forEach(System.out::println);
+
+        /**
+         * Вернуть список всех уникальных символов, содержащихся в списке слов
+         */
+        List<String> wordsList1 = Arrays.asList("Hello", "World");
+        //возвращает список массива String
+        List<String[]> uniqueCharacters1 = wordsList1.stream()
+                .map(w -> w.split(""))
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<String> wordsList2 = Arrays.asList("Hello", "World");
+        //возвращает список потоков из String
+        List<Stream<String>> uniqueCharacters2 = wordsList2.stream()
+                .map(w -> w.split(""))
+                .map(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<String> wordsList3 = Arrays.asList("Hello", "World");
+        //возвращает то что надо - список String
+        List<String> uniqueCharacters3 = wordsList3
+                .stream()
+                .map(w -> w.split(""))
+                .flatMap(Arrays::stream)//схлопывает несколько потоков в один поток
+                .distinct()
+                .collect(Collectors.toList());
+
+        System.out.println(uniqueCharacters3);
 
         //create empty stream
         Stream<String> emptyStream = Stream.empty();
