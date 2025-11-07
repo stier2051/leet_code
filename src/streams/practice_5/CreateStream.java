@@ -6,11 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class CreateStream {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //create stream
         Stream<String> stream = Stream.of("Modern", "Java", "In", "Action");
@@ -24,7 +25,7 @@ public class CreateStream {
         List<String[]> uniqueCharacters1 = wordsList1.stream()
                 .map(w -> w.split(""))
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(toList());
 
         List<String> wordsList2 = Arrays.asList("Hello", "World");
         //возвращает список потоков из String
@@ -32,7 +33,7 @@ public class CreateStream {
                 .map(w -> w.split(""))
                 .map(Arrays::stream)
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(toList());
 
         List<String> wordsList3 = Arrays.asList("Hello", "World");
         //возвращает то что надо - список String
@@ -41,7 +42,7 @@ public class CreateStream {
                 .map(w -> w.split(""))
                 .flatMap(Arrays::stream)//схлопывает несколько потоков в один поток
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(toList());
 
         System.out.println(uniqueCharacters3);
 
@@ -53,24 +54,41 @@ public class CreateStream {
         Stream<String> homeValueStream =
                 homeValue == null ? Stream.empty() : Stream.of(homeValue);
 
-
-        Stream<String> homeValueStream1 = Stream.ofNullable(System.getProperty("home"));
-
-        Stream<String> values =
-                Stream.of("config", "home", "user")
-                        .flatMap(key -> Stream.ofNullable(System.getProperty(key)));
-
+        homeValueStream.forEach(System.out::println);
         long uniqueWords = 0;
-        try (Stream<String> lines =
-                     Files.lines(Paths.get("files/file_1.txt"), Charset.defaultCharset())) {
-
-            uniqueWords = lines.flatMap(line -> Arrays.stream(line.split(" ")))
+        try (Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())) {
+            uniqueWords = lines
+                    .flatMap(line -> Arrays.stream(line.split(" ")))
                     .distinct()
                     .count();
         } catch (IOException e) {
-
+            throw new IOException(e.getMessage());
         }
-
         System.out.println(uniqueWords);
+
+        numsQuad();
+        numPairs();
+    }
+
+    private static void numsQuad() {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> numbersQuad = numbers
+                .stream()
+                .map(e -> e * e)
+                .collect(toList());
+        System.out.println(numbersQuad);
+    }
+
+    private static void numPairs() {
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
+        List<int[]> pairs = numbers1
+                .stream()
+                .flatMap(i -> numbers2
+                        .stream()
+                        .filter(j -> (i + j) % 3 == 0)
+                        .map(j -> new int[]{i, j}))
+                .collect(toList());
+        pairs.forEach(e -> System.out.println(Arrays.toString(e)));
     }
 }
