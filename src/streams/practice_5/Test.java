@@ -1,9 +1,6 @@
 package streams.practice_5;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test {
@@ -20,12 +17,12 @@ public class Test {
         traders.add(brian);
 
         List<Transaction> transactions = Arrays.asList(
-                new Transaction(brian, 2011, 300),
-                new Transaction(raoul, 2012, 1000),
-                new Transaction(raoul, 2011, 400),
-                new Transaction(mario, 2012, 710),
-                new Transaction(mario, 2012, 700),
-                new Transaction(alan, 2012, 950)
+                new Transaction(brian, 2011, 300, Currency.getInstance("KZT")),
+                new Transaction(raoul, 2012, 1000, Currency.getInstance("USD")),
+                new Transaction(raoul, 2011, 400, Currency.getInstance("USD")),
+                new Transaction(mario, 2012, 710, Currency.getInstance("KZT")),
+                new Transaction(mario, 2012, 700, Currency.getInstance("USD")),
+                new Transaction(alan, 2012, 950, Currency.getInstance("KZT"))
         );
 
         //Найти все транзакции за 2011 год и отсортировать их по сумме (от меньшей к большей)
@@ -95,5 +92,9 @@ public class Test {
                 .reduce(0, Integer::min);
 
         System.out.println(transactionMin);
+
+        Map<Currency, List<Transaction>> transactionsByCurrencies =
+                transactions.stream().collect(Collectors.groupingBy(Transaction::getCurrency));
+        transactionsByCurrencies.forEach((key, value) -> {System.out.println(key + ": " + value);});
     }
 }
