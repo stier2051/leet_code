@@ -1,8 +1,6 @@
 package streams;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -130,5 +128,20 @@ public class MenuTest {
                                         new int[]{a, b, (int)Math.sqrt(a * a + b * b)})
                         );
         pythagoreanTriples.forEach(t -> System.out.println(t[0] + ", " + t[1] + ", " + t[2]));
+
+        //Collectors methods
+        Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
+        Optional<Dish> mostCalorieDish = specialMenu.stream()
+                .collect(Collectors.maxBy(dishCaloriesComparator));
+        System.out.println(mostCalorieDish);
+
+        int totalCalories = specialMenu.stream().collect(Collectors.summingInt(Dish::getCalories));
+        System.out.println(totalCalories);
+
+        IntSummaryStatistics menuStatistics = specialMenu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
+        System.out.println(menuStatistics);
+
+        String shortMenu = specialMenu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+        System.out.println(shortMenu);
     }
 }
