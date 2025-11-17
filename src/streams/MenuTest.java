@@ -143,5 +143,18 @@ public class MenuTest {
 
         String shortMenu = specialMenu.stream().map(Dish::getName).collect(Collectors.joining(", "));
         System.out.println(shortMenu);
+
+        Map<Type, List<Dish>> dishesByType = specialMenu.stream().collect(Collectors.groupingBy(Dish::getType));
+        System.out.println(dishesByType);
+
+        Map<CaloricLevel, List<Dish>> dishesByCaloricLevel = specialMenu.stream()
+                .collect(Collectors.groupingBy(dish -> {
+                    if (dish.getCalories() <= 400)
+                        return CaloricLevel.DIET;
+                    else if (dish.getCalories() <= 700)
+                        return CaloricLevel.NORMAL;
+                    else return CaloricLevel.FAT;
+                }));
+        System.out.println(dishesByCaloricLevel);
     }
 }
