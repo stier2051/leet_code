@@ -156,5 +156,20 @@ public class MenuTest {
                     else return CaloricLevel.FAT;
                 }));
         System.out.println(dishesByCaloricLevel);
+
+        Map<Type, List<Dish>> caloricDishesByType = specialMenu.stream().
+                filter(dish -> dish.getCalories() > 500)
+                .collect(Collectors.groupingBy(Dish::getType));
+        System.out.println(caloricDishesByType);
+
+        Map<Type, List<Dish>> caloricDishesByType1 = specialMenu.stream()
+                .collect(Collectors.groupingBy(Dish::getType, Collectors.filtering(dish -> dish.getCalories() > 500, Collectors.toList())));
+        System.out.println(caloricDishesByType1);
+
+        Map<Boolean, List<Dish>> partitionedMenu = specialMenu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+        System.out.println(partitionedMenu);
+
+        List<Dish> vegetarianDishes = partitionedMenu.get(true);
+        System.out.println(vegetarianDishes);
     }
 }
